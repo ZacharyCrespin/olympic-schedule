@@ -20,10 +20,11 @@ module.exports = async function events() {
         endTime: event.singleEvent.endDate,
         img: event.singleEvent.thumbnail ? event.singleEvent.thumbnail.path : '',
         imgAlt: event.singleEvent.thumbnail ? event.singleEvent.thumbnail.altTitle : '',
-        sport: event.sports[0] ? event.sports[0].title : 'Non Sport',
+        sport: event.sports.length ? event.sports.map(s => s.title).join(', ') : 'Non Sport',
         title: event.singleEvent.title,
         network: event.singleEvent.network.name,
-        networkLogo: event.singleEvent.network.lightBackgroundLogo.path
+        networkLogo: event.singleEvent.network.lightBackgroundLogo.path,
+        summary: event.singleEvent.summary
       })
     }
   });

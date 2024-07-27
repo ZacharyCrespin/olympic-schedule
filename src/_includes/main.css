@@ -5,7 +5,7 @@ body {
 }
 
 main, header {
-  margin-inline: auto;
+  margin-inline: 2rem;
   max-width: 120ch;
 }
 
@@ -31,12 +31,18 @@ ul {
   display: grid;
   grid-template-columns: 1fr max-content;
 }
+.event .text h2, .event .text h3, .event .text p {
+  margin-block: 0.25em;
+}
 .event-img {
   max-height: 12em;
   border-radius: 1rem;
 }
+.event .watch {
+  margin: 0.5rem;
+}
 .network-logo {
-  height: 3em;
+  width: 3rem;
 }
 
 @media screen and (max-width: 800px) {
@@ -56,9 +62,5 @@ ul {
     max-height: 50dvh;
     border-radius: 1rem;
     width: 100%;
-  }
-  .network-logo {
-    height: auto;
-    width: 3rem;
   }
 }

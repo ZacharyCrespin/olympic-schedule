@@ -16,7 +16,7 @@ module.exports = async function events() {
   events.data.forEach(event => {
     if ((event.singleEvent.endDate * 1000 > Date.now()) && (event.singleEvent.network != null) && (event.singleEvent.network != null) && (event.singleEvent.network.machineName != 'telemundo')) {
       currentEvents.push({
-        startTime: DateTime.fromSeconds(event.singleEvent.startDate).toFormat('LLLL d, t'),
+        startTime: DateTime.fromSeconds(event.singleEvent.startDate).setZone("America/Los_Angeles").toFormat('LLLL d, t'),
         endTime: event.singleEvent.endDate,
         img: event.singleEvent.thumbnail ? event.singleEvent.thumbnail.path : '',
         imgAlt: event.singleEvent.thumbnail ? event.singleEvent.thumbnail.altTitle : '',

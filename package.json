@@ -1,0 +1,17 @@
+{
+  "name": "olympic-schedule",
+  "version": "0.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "eleventy --quiet --serve",
+    "build": "eleventy"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "GPL-3.0-or-later",
+  "description": "",
+  "dependencies": {
+    "@11ty/eleventy": "^2.0.1",
+    "clean-css": "^5.3.3"
+  }
+}

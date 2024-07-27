@@ -1,0 +1,21 @@
+---
+layout: main.njk
+---
+<ul class="events">
+	{% for event in events %}
+		<li class="event">
+			<img class="event-img" src={{event.img}} alt={{event.imgAlt}}>
+			<div class="title">
+				<h3>{{event.sport}}</h3>
+				<h2>{{event.title}}</h2>
+				<p>{{event.startTime}} - {{event.network}}</p>
+			</div>
+			<div class="watch">
+				<p class="small light">Watch On</p>
+				<img class="network-logo" src={{event.networkLogo}} alt={{network}}>
+			</div>
+		</li>
+	{% else %}
+		<p>No Events Found</p>
+	{% endfor %}
+</ul>

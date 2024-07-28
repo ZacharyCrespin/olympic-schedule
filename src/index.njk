@@ -1,10 +1,25 @@
 ---
 layout: main.njk
 ---
+  <div class="filters">
+		<p>Filter by:</p>
+		<select name="sport" id="sport">
+			<option value="" selected>Sport</option>
+			{% for item in events.currentTags %}
+				<option value="{{item}}">{{item}}</option>
+			{% endfor %}
+		</select>
+	</div>
+</details>
 <ul class="events">
-	{% for event in events %}
-		<li class="event">
-			<img class="event-img" src={{event.img}} alt={{event.imgAlt}}>
+	{% for event in events.currentEvents %}
+		<li class="event" data-sports="{{event.sport}}">
+			<div class="image-container">
+				{% if event.live %}
+					<p class="live">Live</p>
+				{% endif %}
+				<img class="event-img" src={{event.img}} alt={{event.imgAlt}}>
+			</div>
 			<div class="text">
 				<div class="title">
 					<h3>{{event.sport}}</h3>
@@ -30,3 +45,20 @@ layout: main.njk
 		<p>No Events Found</p>
 	{% endfor %}
 </ul>
+
+<script>
+	document.getElementById('sport').addEventListener('change', function() {
+  const inputSport = this.value.split(',').map(sport => sport.trim());
+
+  document.querySelectorAll('.events .event').forEach(event => {
+    if (this.value === '') {
+      event.style.display = '';
+    } else {
+      const eventSports = event.getAttribute('data-sports').split(',').map(sport => sport.trim());
+      const hasMatch = inputSport.some(sport => eventSports.includes(sport));
+      
+      event.style.display = hasMatch ? '' : 'none';
+    }
+  });
+});
+</script>

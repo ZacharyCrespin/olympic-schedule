@@ -1,7 +1,6 @@
 const pkg = require('./package.json');
 const CleanCSS = require("clean-css");
 const { DateTime, Settings } = require('luxon');
-Settings.defaultZoneName = "America/Los_Angeles";
 
 module.exports = function(eleventyConfig) {
   eleventyConfig.addFilter("cssmin", function (code) {

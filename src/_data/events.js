@@ -1,5 +1,4 @@
-const { DateTime, Settings } = require('luxon');
-Settings.defaultZoneName = "America/Los_Angeles";
+const { DateTime } = require('luxon');
 
 const url = `https://schedules.nbcolympics.com/api/v1/schedule?timeZone=America%2FLos_Angeles&startDate=${DateTime.now().toISODate()}&inPattern=true`;
 

@@ -26,7 +26,7 @@ module.exports = async function events() {
       }
 
       currentEvents.push({
-        startTime: DateTime.fromSeconds(event.singleEvent.startDate).toFormat('LLLL d, t'),
+        startTime: DateTime.fromSeconds(event.singleEvent.startDate).toFormat('t'),
         endTime: event.singleEvent.endDate,
         img: event.singleEvent.thumbnail.path,
         imgAlt: event.singleEvent.thumbnail.altTitle,

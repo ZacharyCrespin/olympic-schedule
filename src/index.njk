@@ -4,7 +4,7 @@ layout: main.njk
   <div class="filters">
 		<p>Filter by:</p>
 		<select name="sport" id="sport">
-			<option value="" selected>Sport</option>
+			<option value="" selected>Sport (All)</option>
 			{% for item in events.currentTags %}
 				<option value="{{item}}">{{item}}</option>
 			{% endfor %}
@@ -24,7 +24,8 @@ layout: main.njk
 				<div class="title">
 					<h3>{{event.sport}}</h3>
 					<h2>{{event.title}}</h2>
-					<p>{{event.startTime}} - {{event.network}}</p>
+					<p>{{event.startTime}} on {{event.network}}</p>
+					<p class="small light">{{event.summary}}</p>
 				</div>
 				<div class="watch">
 					<p class="small light">Watch On</p>
@@ -34,8 +35,8 @@ layout: main.njk
 					{% if event.rundown %}
 						{% for item in event.rundown %}
 							<div class="schedule-item">
-								<p>{{item.date | itemTime}}</p>
-								<p>{{item.header}}</p>
+								<p>{{item.date | itemTime}} - {{item.header}}</p>
+								<p class="small light">{{item.description}}</p>
 							</div>
 						{% endfor %}
 					{% endif %}

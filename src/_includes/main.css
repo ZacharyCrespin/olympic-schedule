@@ -40,8 +40,9 @@ ul {
   max-height: 12em;
   border-radius: 1rem;
 }
-.event .text .summary {
-  margin-block: 1rem;
+.event .details {
+  grid-column: span 2;
+  margin-top: 0.75rem;
 }
 .event .schedule-item {
   display: grid;
@@ -49,6 +50,7 @@ ul {
   column-gap: 1em;
 }
 .event .watch {
+  text-align: right;
   margin: 0.5rem;
 }
 .network-logo {
@@ -58,10 +60,14 @@ ul {
   position: absolute;
   z-index: 3;
   color: white;
-  background-color: red;
+  background-color: #ef1541;
   margin: 1rem;
   padding: 0.15em 0.25em;
   border-radius: 0.25rem;
+}
+
+.event-img.gold {
+  box-shadow: 0 0 1rem #FCB131;
 }
 
 .filters {

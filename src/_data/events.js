@@ -2,6 +2,8 @@ const { DateTime } = require('luxon');
 
 const url = `https://schedules.nbcolympics.com/api/v1/schedule?timeZone=America%2FLos_Angeles&startDate=${DateTime.now().toISODate()}&inPattern=true`;
 
+const now = Date.now()/1000
+
 module.exports = async function events() {
   let events;
   let currentEvents = [];
@@ -33,7 +35,8 @@ module.exports = async function events() {
         summary: event.singleEvent.summary,
         network: event.singleEvent.network.name,
         networkLogo: event.singleEvent.network.lightBackgroundLogo.path,
-        live: (event.singleEvent.status == 'live'),
+        live: (event.singleEvent.startDate <= now && now <= event.singleEvent.endDate), // status was unreliable
+        medal: event.singleEvent.isMedalSession ? 'gold' : '',
         rundown: event.singleEvent.rundown.items ? event.singleEvent.rundown.items : null,
       })
     }

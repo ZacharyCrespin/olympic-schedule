@@ -18,14 +18,19 @@ layout: main.njk
 				{% if event.live %}
 					<p class="live">Live</p>
 				{% endif %}
-				<img class="event-img" src={{event.img}} alt={{event.imgAlt}}>
+				<img class="event-img {{event.medal}}" src={{event.img}} alt={{event.imgAlt}}>
 			</div>
 			<div class="text">
 				<div class="title">
 					<h3>{{event.sport}}</h3>
 					<h2>{{event.title}}</h2>
 					<p>{{event.startTime}} - {{event.network}}</p>
-					<p class="small light summary">{{event.summary}}</p>
+				</div>
+				<div class="watch">
+					<p class="small light">Watch On</p>
+					<img class="network-logo" src={{event.networkLogo}} alt={{network}}>
+				</div>
+				<div class="details">
 					{% if event.rundown %}
 						{% for item in event.rundown %}
 							<div class="schedule-item">
@@ -34,10 +39,6 @@ layout: main.njk
 							</div>
 						{% endfor %}
 					{% endif %}
-				</div>
-				<div class="watch">
-					<p class="small light">Watch On</p>
-					<img class="network-logo" src={{event.networkLogo}} alt={{network}}>
 				</div>
 			</div>
 		</li>

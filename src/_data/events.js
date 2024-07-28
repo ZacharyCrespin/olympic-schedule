@@ -1,4 +1,5 @@
-const { DateTime } = require('luxon');
+const { DateTime, Settings } = require('luxon');
+Settings.defaultZoneName = "America/Los_Angeles";
 
 const url = `https://schedules.nbcolympics.com/api/v1/schedule?timeZone=America%2FLos_Angeles&startDate=${DateTime.now().toISODate()}&inPattern=true`;
 
@@ -16,7 +17,7 @@ module.exports = async function events() {
   events.data.forEach(event => {
     if ((event.singleEvent.endDate * 1000 > Date.now()) && (event.singleEvent.network != null) && (event.singleEvent.network != null) && (event.singleEvent.network.machineName != 'telemundo')) {
       currentEvents.push({
-        startTime: DateTime.fromSeconds(event.singleEvent.startDate).setZone("America/Los_Angeles").toFormat('LLLL d, t'),
+        startTime: DateTime.fromSeconds(event.singleEvent.startDate).toFormat('LLLL d, t'),
         endTime: event.singleEvent.endDate,
         img: event.singleEvent.thumbnail.path,
         imgAlt: event.singleEvent.thumbnail.altTitle,

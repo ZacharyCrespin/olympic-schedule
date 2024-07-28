@@ -1,6 +1,7 @@
 const pkg = require('./package.json');
 const CleanCSS = require("clean-css");
-const { DateTime } = require('luxon');
+const { DateTime, Settings } = require('luxon');
+Settings.defaultZoneName = "America/Los_Angeles";
 
 module.exports = function(eleventyConfig) {
   eleventyConfig.addFilter("cssmin", function (code) {
@@ -13,7 +14,7 @@ module.exports = function(eleventyConfig) {
     if (!input) {
       return "Time TBD"
     }
-    return DateTime.fromSeconds(input).setZone("America/New_York").toFormat('t')
+    return DateTime.fromSeconds(input, {zone: "America/New_York"}).toFormat('t')
   });
 
   return {

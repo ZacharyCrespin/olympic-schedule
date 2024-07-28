@@ -18,13 +18,14 @@ module.exports = async function events() {
       currentEvents.push({
         startTime: DateTime.fromSeconds(event.singleEvent.startDate).setZone("America/Los_Angeles").toFormat('LLLL d, t'),
         endTime: event.singleEvent.endDate,
-        img: event.singleEvent.thumbnail ? event.singleEvent.thumbnail.path : '',
-        imgAlt: event.singleEvent.thumbnail ? event.singleEvent.thumbnail.altTitle : '',
+        img: event.singleEvent.thumbnail.path,
+        imgAlt: event.singleEvent.thumbnail.altTitle,
         sport: event.sports.length ? event.sports.map(s => s.title).join(', ') : 'Non Sport',
         title: event.singleEvent.title,
         network: event.singleEvent.network.name,
         networkLogo: event.singleEvent.network.lightBackgroundLogo.path,
-        summary: event.singleEvent.summary
+        summary: event.singleEvent.summary,
+        rundown: event.singleEvent.rundown.items ? event.singleEvent.rundown.items : null
       })
     }
   });

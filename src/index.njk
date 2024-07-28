@@ -10,7 +10,15 @@ layout: main.njk
 					<h3>{{event.sport}}</h3>
 					<h2>{{event.title}}</h2>
 					<p>{{event.startTime}} - {{event.network}}</p>
-					<p class="small light">{{summary}}</p>
+					<p class="small light summary">{{event.summary}}</p>
+					{% if event.rundown %}
+						{% for item in event.rundown %}
+							<div class="schedule-item">
+								<p>{{item.date | itemTime}}</p>
+								<p>{{item.header}}</p>
+							</div>
+						{% endfor %}
+					{% endif %}
 				</div>
 				<div class="watch">
 					<p class="small light">Watch On</p>

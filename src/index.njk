@@ -24,18 +24,17 @@ layout: main.njk
 				<div class="title">
 					<h3>{{event.sport}}</h3>
 					<h2>{{event.title}}</h2>
-					<p>{{event.startTime}} on {{event.network}}</p>
+					<p><b>{{event.startTime}}</b> on <b>{{event.network}}</b></p>
 					<p class="small light">{{event.summary}}</p>
 				</div>
 				<div class="watch">
-					<p class="small light">Watch On</p>
 					<img class="network-logo" src={{event.networkLogo}} alt={{network}}>
 				</div>
 				<div class="details">
 					{% if event.rundown %}
 						{% for item in event.rundown %}
 							<div class="schedule-item">
-								<p>{{item.date | itemTime}} - {{item.header}}</p>
+								<p><b>{{item.date | itemTime}}</b> - {{item.header | boldSport | safe}}</p>
 								<p class="small light">{{item.description}}</p>
 							</div>
 						{% endfor %}

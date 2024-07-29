@@ -6,7 +6,7 @@ body {
 
 main, header {
   margin-inline: 2rem;
-  max-width: 120ch;
+  max-width: 115ch;
 }
 
 ul {
@@ -58,7 +58,7 @@ ul {
 }
 .event .watch {
   text-align: right;
-  margin: 0.5rem;
+  margin-top: 0.5rem;
 }
 .network-logo {
   width: 3rem;
@@ -80,10 +80,6 @@ ul {
 }
 
 @media screen and (max-width: 800px) {
-  main, header {
-    margin-inline: 2rem;
-  }
-
   .event {
     grid-template-columns: 1fr;
     margin-block: 2rem;

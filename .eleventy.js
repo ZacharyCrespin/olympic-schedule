@@ -21,8 +21,8 @@ module.exports = function(eleventyConfig) {
       'Archery',              'Artistic Swimming',     'Badminton',
       'Basketball',           'Basketball 3x3',        'Beach Volleyball',
       'Blind Soccer',         'Boccia',                'Boxing',
-      'Breaking',             'Canoeing',              'Ceremony',
-      'Ceremony',             'Cycling',               'Diving',
+      'Breaking',             'Canoeing',              
+      'Cycling',              'Diving',
       'Equestrian',           'Fencing',               'Field Hockey',
       'Goalball',             'Golf',                  'Gymnastics',
       'Handball',             'Judo',                  'Modern Pentathlon',
@@ -43,7 +43,7 @@ module.exports = function(eleventyConfig) {
     allSports.forEach(str => {
       const regex = new RegExp(`(${str})`, 'gi');
       input = input.replace(regex, '<b>$1</b>');
-    });
+    })
     return input
   });
 

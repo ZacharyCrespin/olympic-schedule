@@ -1,31 +1,31 @@
 const { DateTime } = require('luxon');
 
-const url = `https://schedules.nbcolympics.com/api/v1/schedule?timeZone=America%2FLos_Angeles&startDate=${DateTime.now().toISODate()}&inPattern=true`;
-
 const now = Date.now()/1000
 
-module.exports = async function events() {
-  let events;
-  let currentEvents = [];
-  let currentTags = [];
+async function loadEvents(date) {
+  const url = `https://schedules.nbcolympics.com/api/v1/schedule?timeZone=America%2FLos_Angeles&startDate=${date}&inPattern=true`;
+
+  let allEvents;
+  let events = [];
+  let tags = [];
   
   try {
     const response = await fetch(url);
-    events = await response.json()
+    allEvents = await response.json()
   } catch (error) {
     console.error('Error fetching data:', error);
   }
   
-  events.data.forEach(event => {
+  allEvents.data.forEach(event => {
     if ((event.singleEvent.endDate * 1000 > Date.now()) && (event.singleEvent.network != null) && (event.singleEvent.network != null) && (event.singleEvent.language.includes('en')) && (event.singleEvent.network.machineName != 'gold-zone')) {
       
-      let tags = event.sports.length ? event.sports.map(s => s.title).join(', ') : '';
+      let allTags = event.sports.length ? event.sports.map(s => s.title).join(', ') : '';
     
-      if (tags) {
-        currentTags.push(...event.sports.map(s => s.title));
+      if (allTags) {
+        tags.push(...event.sports.map(s => s.title));
       }
 
-      currentEvents.push({
+      events.push({
         startTime: DateTime.fromSeconds(event.singleEvent.startDate).toFormat('t'),
         endTime: event.singleEvent.endDate,
         img: event.singleEvent.thumbnail.path,
@@ -35,14 +35,24 @@ module.exports = async function events() {
         summary: event.singleEvent.summary,
         network: event.singleEvent.network.name,
         networkLogo: event.singleEvent.network.lightBackgroundLogo.path,
-        live: (event.singleEvent.startDate <= now && now <= event.singleEvent.endDate), // status was unreliable
+        live: (event.singleEvent.startDate <= now && now < event.singleEvent.endDate), // status was unreliable
         medal: event.singleEvent.isMedalSession ? 'gold' : '',
         rundown: event.singleEvent.rundown.items ? event.singleEvent.rundown.items : null,
       })
     }
   });
 
-  currentTags = [...new Set(currentTags)];
+  tags = [...new Set(tags)];
 
-  return {currentEvents, currentTags}
+  return {events, tags}
+}
+
+module.exports = async function() {
+  const today = await loadEvents(DateTime.now().toISODate())
+  const tomorrow = await loadEvents(DateTime.now().plus({days: 1}).toISODate())
+
+  return {
+    today,
+    tomorrow,
+  }
 }

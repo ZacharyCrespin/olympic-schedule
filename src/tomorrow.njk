@@ -1,0 +1,10 @@
+---
+layout: main.njk
+title: Tomorrow's Olympic Schedule
+---
+{% set tags = events.tomorrow.tags %}
+{% include 'filters.njk' %}
+
+{% set events = events.tomorrow.events %}
+{% set tomorrow = true %}
+{% include 'events.njk' %}

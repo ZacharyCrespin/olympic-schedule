@@ -1,0 +1,35 @@
+<ul class="events">
+	{% for event in events %}
+		<li class="event" data-sports="{{event.sport}}">
+			<div class="image-container">
+				{% if event.live %}
+					<p class="live">Live</p>
+				{% endif %}
+				<img class="event-img {{event.medal}}" src={{event.img}} alt={{event.imgAlt}}>
+			</div>
+			<div class="text">
+				<div class="title">
+					<h3>{{event.sport}}</h3>
+					<h2>{{event.title}}</h2>
+					<p><b>{% if tomorrow %}Tomorrow {% endif %}{{event.startTime}}</b> on <b>{{event.network}}</b></p>
+				</div>
+				<div class="watch">
+					<img class="network-logo" src={{event.networkLogo}} alt={{network}}>
+				</div>
+				<div class="details">
+					<p class="small light summary">{{event.summary}}</p>
+					{% if event.rundown %}
+						{% for item in event.rundown %}
+							<div class="schedule-item">
+								<p><b>{% if item.date %}{% if tomorrow %}Tomorrow {% endif %}{{item.date | itemTime}}</b> - {% endif %}{{item.header | boldSport | safe}}</p>
+								<p class="small light">{{item.description}}</p>
+							</div>
+						{% endfor %}
+					{% endif %}
+				</div>
+			</div>
+		</li>
+	{% else %}
+		<p>No Events Found</p>
+	{% endfor %}
+</ul>

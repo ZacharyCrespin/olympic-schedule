@@ -5,5 +5,7 @@ title: Olympic Schedule
 {% set tags = events.today.tags %}
 {% include 'filters.njk' %}
 
+<a href="/tomorrow">View Tomorrow</a>
+
 {% set events = events.today.events %}
 {% include 'events.njk' %}

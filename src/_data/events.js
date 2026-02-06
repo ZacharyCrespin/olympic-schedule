@@ -17,7 +17,7 @@ async function loadEvents(date) {
   }
   
   allEvents.data.forEach(event => {
-    if ((event.singleEvent.endDate * 1000 > Date.now()) && (event.singleEvent.language.includes('en')) && (event.singleEvent.title !== 'Best of Milan Cortina')) {
+    if ((event.singleEvent.endDate * 1000 > Date.now()) && (event.singleEvent.language.includes('en')) && (event.singleEvent.network?.machineName !== 'gold-zone') && (event.singleEvent.title !== 'Best of Milan Cortina')) {
       
     if (event.singleEvent.network == null) {
       event.singleEvent.network = {
@@ -35,9 +35,24 @@ async function loadEvents(date) {
         tags.push(...event.sports.map(s => s.title));
       }
 
+      function calcDuration(start, end) {
+        if (!start || !end || end <= start) return '0h 0m';
+
+        const startTime = DateTime.fromSeconds(start);
+        const endTime = DateTime.fromSeconds(end);
+
+        const totalMinutes = Math.max(0, endTime.diff(startTime, 'minutes').minutes);
+
+        const hours = Math.floor(totalMinutes / 60);
+        const minutes = totalMinutes % 60;
+
+        return `${((hours > 0) ? `${hours}h`: '')} ${String(minutes).padStart(2, '0')}m`;
+      }
+
+      console.log(`imgAlt: ${event.singleEvent.thumbnail.altTitle}`)
       events.push({
         startTime: DateTime.fromSeconds(event.singleEvent.startDate).toFormat('t'),
-        endTime: event.singleEvent.endDate,
+        duration: calcDuration(event.singleEvent.startDate, event.singleEvent.endDate),
         img: event.singleEvent.thumbnail.path,
         imgAlt: event.singleEvent.thumbnail.altTitle,
         sport: event.sports.length ? event.sports.map(s => s.title).join(', ') : 'Non Sport',

@@ -5,23 +5,24 @@
 				{% if event.live %}
 					<p class="live">Live</p>
 				{% endif %}
-				<img class="event-img{{event.medal}}" src={{event.img}} alt=""><!-- {{event.imgAlt}} -->
+				<p class="time">{{event.duration}}</p>
+				<img class="event-img {{event.medal}}" src={{event.img}} alt=""><!-- {{event.imgAlt}} -->
 			</div>
 			<div class="text">
 				<div class="title">
 					<h3>{{event.sport}}</h3>
 					<h2>{{event.title}}</h2>
-					<p><b>{% if tomorrow %}Tomorrow {% endif %}{{event.startTime}}</b> on <b>{{event.network}}</b></p>
+					<p>{% if tomorrow %}Tomorrow, {% endif %}<b>{{event.startTime}}</b> on <b>{{event.network}}</b></p>
 				</div>
 				<div class="watch">
-					<img class="network-logo" src={{event.networkLogo}} alt=""><!--{{network}}-->
+					<img class="network-logo" src={{event.networkLogo}} alt="{{event.network}} Logo">
 				</div>
 				<div class="details">
 					<p class="small light summary">{{event.summary}}</p>
 					{% if event.rundown %}
 						{% for item in event.rundown %}
 							<div class="schedule-item">
-								<p><b>{% if item.date %}{% if tomorrow %}Tomorrow {% endif %}{{item.date | itemTime}}</b> - {% endif %}{{item.header | boldSport | safe}}</p>
+								<p>{% if item.date %}{% if tomorrow %}Tomorrow, {% endif %}<b>{{item.date | itemTime}}</b> - {% endif %}{{item.header | boldSport | safe}}</p>
 								<p class="small light">{{item.description}}</p>
 							</div>
 						{% endfor %}

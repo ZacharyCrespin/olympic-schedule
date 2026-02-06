@@ -28,20 +28,37 @@ ul {
   margin-block: 1rem;
   column-gap: 1.5rem;
 }
+.image-container {
+  position: relative;
+}
 .event-img {
   max-height: 12em;
   border-radius: 1rem;
 }
 .live {
   position: absolute;
+  top: 1rem;
+  left: 1rem;
   z-index: 3;
   color: white;
   background-color: #ef1541;
-  margin: 1rem;
+  margin: 0;
+  padding: 0.15em 0.25em;
+  border-radius: 0.25rem;
+}
+.time {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  z-index: 3;
+  color: white;
+  background-color: hsla(0, 0%, 27%, 0.5);
+  margin: 0;
   padding: 0.15em 0.25em;
   border-radius: 0.25rem;
 }
 .event-img.gold {
+  border: 2px solid #FCB131;
   box-shadow: 0 0 0.75rem #FCB131;
 }
 .event .text {

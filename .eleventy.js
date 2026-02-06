@@ -7,7 +7,7 @@ module.exports = function(eleventyConfig) {
 		return new CleanCSS({}).minify(code).styles;
 	});
 
-  eleventyConfig.addShortcode("version", () => pkg.version);
+  eleventyConfig.addPassthroughCopy('./src/peacock.png');
 
   eleventyConfig.addFilter("itemTime", function (input) {
     if (!input) {
@@ -38,8 +38,11 @@ module.exports = function(eleventyConfig) {
       'Tennis',               'Track & Field',         'Trampoline',
       'Triathlon',            'Volleyball',            'Water Polo',
       'Weightlifting',        'Wheelchair Basketball', 'Wheelchair Fencing',
-      'Wheelchair Rugby',     'Wheelchair Tennis',     'Wrestling'
+      'Wheelchair Rugby',     'Wheelchair Tennis',     'Wrestling',
+
+      "Alpine Skiing","Biathlon","Bobsled","Cross-Country Skiing","Curling","Figure Skating","Freestyle Skiing","Hockey","Luge","Nordic Combined","Para Alpine Skiing","Para Biathlon","Para Cross-Country Skiing","Para Snowboarding","Short Track","Skeleton","Ski Jumping","Ski Mountaineering","Sled Hockey","Snowboarding","Speed Skating","Wheelchair Curling",
     ]
+  
     allSports.forEach(str => {
       const regex = new RegExp(`(${str})`, 'gi');
       input = input.replace(regex, '<b>$1</b>');

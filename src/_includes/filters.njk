@@ -6,20 +6,51 @@
       <option value="{{item}}">{{item}}</option>
     {% endfor %}
   </select>
+  <input type="checkbox" name="peacock" id="peacock-check">
+  <p>I don't have Peacock</p>
 </div>
 <script>
 	document.getElementById('sport').addEventListener('change', function() {
-  const inputSport = this.value.split(',').map(sport => sport.trim());
+    const inputSport = this.value.split(',').map(sport => sport.trim());
 
-  document.querySelectorAll('.events .event').forEach(event => {
-    if (this.value === '') {
-      event.style.display = '';
+    document.querySelectorAll('.events .event').forEach(event => {
+      if (this.value === '') {
+        event.style.display = '';
+      } else {
+        const eventSports = event.getAttribute('data-sports').split(',').map(sport => sport.trim());
+        const hasMatch = inputSport.some(sport => eventSports.includes(sport));
+        
+        event.style.display = hasMatch ? '' : 'none';
+      }
+    });
+  });
+
+
+  document.getElementById('peacock-check').addEventListener('change', function() {
+    const checked = this.checked
+    if (checked) {
+      document.querySelectorAll('.events .event').forEach(event => {
+        if (event.getAttribute('data-peacock-only') == 'true') {
+          event.style.display = 'none'
+        }
+      });
+      localStorage.setItem('hide-peacock', 1)
     } else {
-      const eventSports = event.getAttribute('data-sports').split(',').map(sport => sport.trim());
-      const hasMatch = inputSport.some(sport => eventSports.includes(sport));
-      
-      event.style.display = hasMatch ? '' : 'none';
+      document.querySelectorAll('.events .event').forEach(event => {
+        event.style.display = ''
+      });
+      localStorage.setItem('hide-peacock', 0)
     }
   });
-});
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if ((localStorage.getItem('hide-peacock') == 1) ? true : false) {
+      document.getElementById('peacock-check').checked = true
+      document.querySelectorAll('.events .event').forEach(event => {
+        if (event.getAttribute('data-peacock-only') == 'true') {
+          event.style.display = 'none'
+        }
+      });
+    }
+  });
 </script>

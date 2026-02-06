@@ -1,6 +1,6 @@
 <ul class="events">
 	{% for event in events %}
-		<li class="event" data-sports="{{event.sport}}">
+		<li class="event" data-sports="{{event.sport}}" data-peacock-only="{{event.network == 'Peacock'}}">
 			<div class="image-container">
 				{% if event.live %}
 					<p class="live">Live</p>

@@ -17,8 +17,18 @@ async function loadEvents(date) {
   }
   
   allEvents.data.forEach(event => {
-    if ((event.singleEvent.endDate * 1000 > Date.now()) && (event.singleEvent.network != null) && (event.singleEvent.network != null) && (event.singleEvent.language.includes('en')) && (event.singleEvent.network.machineName != 'gold-zone')) {
+    if ((event.singleEvent.endDate * 1000 > Date.now()) && (event.singleEvent.language.includes('en')) && (event.singleEvent.title !== 'Best of Milan Cortina')) {
       
+    if (event.singleEvent.network == null) {
+      event.singleEvent.network = {
+        machineName: 'peacock',
+        name: 'Peacock',
+        lightBackgroundLogo: {
+          path: '/peacock.png'
+        }
+      };
+    }
+
       let allTags = event.sports.length ? event.sports.map(s => s.title).join(', ') : '';
     
       if (allTags) {

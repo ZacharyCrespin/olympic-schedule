@@ -1,11 +1,8 @@
-const pkg = require('./package.json');
-const CleanCSS = require("clean-css");
+const eleventyPluginFilesMinifier = require("@sherby/eleventy-plugin-files-minifier");
 const { DateTime } = require('luxon');
 
 module.exports = function(eleventyConfig) {
-  eleventyConfig.addFilter("cssmin", function (code) {
-		return new CleanCSS({}).minify(code).styles;
-	});
+  eleventyConfig.addPlugin(eleventyPluginFilesMinifier);
 
   eleventyConfig.addPassthroughCopy('./src/peacock.png');
 

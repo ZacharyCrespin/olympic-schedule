@@ -5,7 +5,7 @@
 				{% if event.live %}
 					<p class="live">Live</p>
 				{% endif %}
-				<img class="event-img {{event.medal}}" src={{event.img}} alt={{event.imgAlt}}>
+				<img class="event-img{{event.medal}}" src={{event.img}} alt=""><!-- {{event.imgAlt}} -->
 			</div>
 			<div class="text">
 				<div class="title">
@@ -14,7 +14,7 @@
 					<p><b>{% if tomorrow %}Tomorrow {% endif %}{{event.startTime}}</b> on <b>{{event.network}}</b></p>
 				</div>
 				<div class="watch">
-					<img class="network-logo" src={{event.networkLogo}} alt={{network}}>
+					<img class="network-logo" src={{event.networkLogo}} alt=""><!--{{network}}-->
 				</div>
 				<div class="details">
 					<p class="small light summary">{{event.summary}}</p>

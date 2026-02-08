@@ -32,6 +32,7 @@ ul {
   position: relative;
 }
 .event-img {
+  width: auto;
   max-height: 12em;
   border-radius: 1rem;
 }
@@ -79,6 +80,7 @@ ul {
 }
 .network-logo {
   width: 3rem;
+  height: auto;
 }
 
 .event .schedule-item {
@@ -88,6 +90,7 @@ ul {
 .filters {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: flex-start;
   align-items: center;
   column-gap: 0.5rem;
@@ -103,6 +106,7 @@ ul {
     max-height: 50dvh;
     border-radius: 1rem;
     width: 100%;
+    height: auto;
   }
   .event .text {
     margin-inline: 0.5rem;

@@ -7,7 +7,7 @@ async function loadEvents(date) {
 
   let allEvents;
   let events = [];
-  let tags = [];
+  let sports = [];
   
   try {
     const response = await fetch(url);
@@ -24,16 +24,15 @@ async function loadEvents(date) {
         machineName: 'peacock',
         name: 'Peacock',
         lightBackgroundLogo: {
-          path: '/peacock.png'
+          path: '/peacock.png',
+          width: 150,
+          height: 150,
         }
       };
     }
 
-      let allTags = event.sports.length ? event.sports.map(s => s.title).join(', ') : '';
-    
-      if (allTags) {
-        tags.push(...event.sports.map(s => s.title));
-      }
+      let eventSports = event.sports.map(s => s.title)
+      sports.push(...eventSports);
 
       function calcDuration(start, end) {
         if (!start || !end || end <= start) return '0h 0m';
@@ -64,6 +63,8 @@ async function loadEvents(date) {
         });
       }
 
+      let usa = event.countries.some(country => country.code === 'USA');
+
       events.push({
         startTime: event.singleEvent.startDate,
         endTime: event.singleEvent.endDate,
@@ -71,21 +72,26 @@ async function loadEvents(date) {
         duration: calcDuration(event.singleEvent.startDate, event.singleEvent.endDate),
         img: event.singleEvent.thumbnail.path,
         imgAlt: event.singleEvent.thumbnail.altTitle,
-        sport: event.sports.length ? event.sports.map(s => s.title).join(', ') : 'Non Sport',
+        imgWidth: event.singleEvent.thumbnail.width,
+        imgHeight: event.singleEvent.thumbnail.height,
+        sport: eventSports.length ? eventSports.join(', ') : 'Non Sport',
         title: event.singleEvent.title,
         summary: event.singleEvent.summary,
         network: event.singleEvent.network.name,
         networkLogo: event.singleEvent.network.lightBackgroundLogo.path,
-        live: (event.singleEvent.startDate <= now && now < event.singleEvent.endDate), // status was unreliable
+        networkLogoWidth: event.singleEvent.network.lightBackgroundLogo.width,
+        networkLogoHeight: event.singleEvent.network.lightBackgroundLogo.height,
         medal: event.singleEvent.isMedalSession,
+        usa,
         rundown: event.singleEvent.rundown,
       })
     }
   });
 
-  tags = [...new Set(tags)];
+  // Remove Duplicates
+  sports = [...new Set(sports)];
 
-  return {events, tags}
+  return {events, sports}
 }
 
 module.exports = async function() {

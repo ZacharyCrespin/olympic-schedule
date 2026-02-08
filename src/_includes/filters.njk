@@ -2,12 +2,17 @@
   <p>Filter by:</p>
   <select name="sport" id="sport">
     <option value="" selected>Sport (All)</option>
-    {% for item in tags %}
+    {% for item in sports %}
       <option value="{{item}}">{{item}}</option>
     {% endfor %}
   </select>
   <input type="checkbox" name="peacock" id="peacock-check">
-  <p>I don't have Peacock</p>
+  <label for="peacock-check">I don't have Peacock</label>
+  <input type="checkbox" name="medal" id="medal-check">
+  <label for="medal-check">Medal Events</label>
+  <input type="checkbox" name="usa" id="usa-check">
+  <label for="usa-check">Team USA</label>
+  <p class="small light">I realized these only work 1 at a time but I don't care to fix it.</p>
 </div>
 <script>
 	document.getElementById('sport').addEventListener('change', function() {
@@ -24,7 +29,6 @@
       }
     });
   });
-
 
   document.getElementById('peacock-check').addEventListener('change', function() {
     const checked = this.checked
@@ -50,6 +54,40 @@
         if (event.getAttribute('data-peacock-only') == 'true') {
           event.style.display = 'none'
         }
+      });
+    }
+  });
+
+  document.getElementById('medal-check').addEventListener('change', function() {
+    const checked = this.checked
+    if (checked) {
+      document.querySelectorAll('.events .event').forEach(event => {
+        if (event.getAttribute('data-medal') == 'true') {
+          event.style.display = ''
+        } else {
+          event.style.display = 'none'
+        }
+      });
+    } else {
+      document.querySelectorAll('.events .event').forEach(event => {
+        event.style.display = ''
+      });
+    }
+  });
+
+  document.getElementById('usa-check').addEventListener('change', function() {
+    const checked = this.checked
+    if (checked) {
+      document.querySelectorAll('.events .event').forEach(event => {
+        if (event.getAttribute('data-usa') == 'true') {
+          event.style.display = ''
+        } else {
+          event.style.display = 'none'
+        }
+      });
+    } else {
+      document.querySelectorAll('.events .event').forEach(event => {
+        event.style.display = ''
       });
     }
   });

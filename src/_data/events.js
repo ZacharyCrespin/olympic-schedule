@@ -1,6 +1,6 @@
 const { DateTime } = require('luxon');
 
-const now = Date.now()/1000
+const now = DateTime.now().toSeconds()
 
 async function loadEvents(date) {
   const url = `https://schedules.nbcolympics.com/api/v1/schedule?timeZone=America%2FLos_Angeles&startDate=${date}&inPattern=true`;
@@ -17,8 +17,8 @@ async function loadEvents(date) {
   }
   
   allEvents.data.forEach(event => {
-    if ((event.singleEvent.endDate * 1000 > Date.now()) && (event.singleEvent.language.includes('en')) && (event.singleEvent.network?.machineName !== 'gold-zone') && (event.singleEvent.title !== 'Best of Milan Cortina')) {
-      
+    if ((event.singleEvent.endDate > now) && (event.singleEvent.language.includes('en')) && (event.singleEvent.network?.machineName !== 'gold-zone') && (event.singleEvent.title !== 'Best of Milan Cortina')) {
+
     if (event.singleEvent.network == null) {
       event.singleEvent.network = {
         machineName: 'peacock',
@@ -49,9 +49,25 @@ async function loadEvents(date) {
         return `${((hours > 0) ? `${hours}h`: '')} ${String(minutes).padStart(2, '0')}m`;
       }
 
-      console.log(`imgAlt: ${event.singleEvent.thumbnail.altTitle}`)
+      if (event.singleEvent.rundown.items) {
+        event.singleEvent.rundown.items.forEach(item => {
+          const adjustedTime = DateTime.fromSeconds(item.date, { zone: "America/New_York" }).setZone("America/Los_Angeles").toSeconds()
+          if (adjustedTime >= event.singleEvent.startDate) {
+            item.displayTime = DateTime.fromSeconds(adjustedTime, { zone: "America/Los_Angeles" }).toFormat('t')
+            event.singleEvent.rundown.timeAdjusted = true
+            item.timeAdjusted = true
+          } else {
+            item.displayTime = DateTime.fromSeconds(adjustedTime, { zone: "America/New_York" }).toFormat('t')
+            event.singleEvent.rundown.timeAdjusted = false
+            item.timeAdjusted = false
+          }
+        });
+      }
+
       events.push({
-        startTime: DateTime.fromSeconds(event.singleEvent.startDate).toFormat('t'),
+        startTime: event.singleEvent.startDate,
+        endTime: event.singleEvent.endDate,
+        time: DateTime.fromSeconds(event.singleEvent.startDate).toFormat('t'),
         duration: calcDuration(event.singleEvent.startDate, event.singleEvent.endDate),
         img: event.singleEvent.thumbnail.path,
         imgAlt: event.singleEvent.thumbnail.altTitle,
@@ -61,8 +77,8 @@ async function loadEvents(date) {
         network: event.singleEvent.network.name,
         networkLogo: event.singleEvent.network.lightBackgroundLogo.path,
         live: (event.singleEvent.startDate <= now && now < event.singleEvent.endDate), // status was unreliable
-        medal: event.singleEvent.isMedalSession ? 'gold' : '',
-        rundown: event.singleEvent.rundown.items ? event.singleEvent.rundown.items : null,
+        medal: event.singleEvent.isMedalSession,
+        rundown: event.singleEvent.rundown,
       })
     }
   });

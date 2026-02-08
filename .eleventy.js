@@ -6,13 +6,6 @@ module.exports = function(eleventyConfig) {
 
   eleventyConfig.addPassthroughCopy('./src/peacock.png');
 
-  eleventyConfig.addFilter("itemTime", function (input) {
-    if (!input) {
-      return "Time TBD"
-    }
-    return DateTime.fromSeconds(input, {zone: "America/New_York"}).toFormat('t')
-  });
-
   eleventyConfig.addFilter("boldSport", function (input) {
     const allSports = [
       'Archery',              'Artistic Swimming',     'Badminton',

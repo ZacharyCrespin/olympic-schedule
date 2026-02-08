@@ -1,31 +1,32 @@
 <ul class="events">
 	{% for event in events %}
-		<li class="event" data-sports="{{event.sport}}" data-peacock-only="{{event.network == 'Peacock'}}">
+		<li class="event" data-startTime="{{event.startTime}}" data-endTime="{{event.endTime}}" data-sports="{{event.sport}}" data-peacock-only="{{event.network == 'Peacock'}}">
 			<div class="image-container">
 				{% if event.live %}
 					<p class="live">Live</p>
 				{% endif %}
 				<p class="time">{{event.duration}}</p>
-				<img class="event-img {{event.medal}}" src={{event.img}} alt=""><!-- {{event.imgAlt}} -->
+				<img class="event-img{% if event.medal %} gold{% endif %}" src={{event.img}} alt="{{event.imgAlt | default('') | escape }}">
 			</div>
 			<div class="text">
 				<div class="title">
 					<h3>{{event.sport}}</h3>
 					<h2>{{event.title}}</h2>
-					<p>{% if tomorrow %}Tomorrow, {% endif %}<b>{{event.startTime}}</b> on <b>{{event.network}}</b></p>
+					<p>{% if tomorrow %}Tomorrow, {% endif %}<b>{{event.time}}</b> on <b>{{event.network}}</b></p>
 				</div>
 				<div class="watch">
 					<img class="network-logo" src={{event.networkLogo}} alt="{{event.network}} Logo">
 				</div>
 				<div class="details">
 					<p class="small light summary">{{event.summary}}</p>
-					{% if event.rundown %}
-						{% for item in event.rundown %}
+					{% if event.rundown.items %}
+						{% for item in event.rundown.items %}
 							<div class="schedule-item">
-								<p>{% if item.date %}{% if tomorrow %}Tomorrow, {% endif %}<b>{{item.date | itemTime}}</b> - {% endif %}{{item.header | boldSport | safe}}</p>
+								<p>{% if item.date %}{% if tomorrow %}Tomorrow, {% endif %}<b>{{item.displayTime}}{% if item.timeAdjusted %}*{% endif %}</b> - {% endif %}{{item.header | boldSport | safe}}</p>
 								<p class="small light">{{item.description}}</p>
 							</div>
 						{% endfor %}
+						{% if event.rundown.timeAdjusted %}<p class="small light">*Times are adjusted from EST but it's impossible to know if the program is actually delayed for pacific viewers.</p>{% endif %}
 					{% endif %}
 				</div>
 			</div>

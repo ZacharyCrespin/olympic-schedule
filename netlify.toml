@@ -1,2 +1,6 @@
 [build.environment]
   TZ = "America/Los_Angeles"
+
+[build]
+  publish = "public"
+  functions = "functions"

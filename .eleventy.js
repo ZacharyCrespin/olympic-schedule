@@ -4,6 +4,7 @@ const { DateTime } = require('luxon');
 module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(eleventyPluginFilesMinifier);
 
+  eleventyConfig.addPassthroughCopy('./src/_redirects');
   eleventyConfig.addPassthroughCopy('./src/peacock.png');
 
   eleventyConfig.addFilter("boldSport", function (input) {
